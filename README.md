@@ -72,7 +72,7 @@ Jeśli chcesz ustawić inny katalog do sprzątania:
    a następnie uruchom:
 
    ```bash
-   java -jar target/myapp-0.1.0-SNAPSHOT-standalone.jar
+   java -jar target/categorease-0.1.0-SNAPSHOT-standalone.jar
    ```
 
 3. Program utworzy potrzebne podkatalogi w wybranym katalogu i przeniesie pliki do odpowiednich kategorii.
