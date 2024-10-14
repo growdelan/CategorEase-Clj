@@ -6,7 +6,7 @@
 
 (def categories
   #{"music" "documents" "installations" "data"
-    "images" "videos" "archives"})
+    "images" "video" "archives"})
 
 (def default-category "others")
 (def model-name "llama3.2")
