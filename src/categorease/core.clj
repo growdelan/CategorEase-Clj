@@ -33,15 +33,18 @@
       (println (str "Błąd podczas przetwarzania pliku "
                     file-name ": " (.getMessage e))))))
 
-(defn handle-event [download-path ctx e]
-  (let [{:keys [kind file]} e
-        file-name (.getName file)
+(defn valid-file? [file]
+  (let [file-name (.getName file)]
+    (and (not (.isHidden file))
+         (not (str/ends-with? file-name ".download")))))
+
+(defn handle-event [download-path ctx {:keys [kind file]}]
+  (let [file-name (.getName file)
         parent-dir (.getParent file)]
     (println "Wykryte" kind "zdarzenie na" file-name)
-    (when (and (#{:create} kind)
+    (when (and (= kind :create)
                (= parent-dir download-path)
-               (not= file-name ".DS_Store")
-               (not (.endsWith file-name ".download")))
+               (valid-file? file))
       (process-file download-path file-name))
     ctx))
 
