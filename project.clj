@@ -5,7 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [environ "1.2.0"]
-                 [net.clojars.wkok/openai-clojure "0.21.1"]]
+                 [net.clojars.wkok/openai-clojure "0.21.1"]
+                 [hawk "0.2.11"]]
   :main ^:skip-aot categorease.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
