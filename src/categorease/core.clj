@@ -1,7 +1,8 @@
 (ns categorease.core
   (:require [categorease.ollama :as ollama]
             [categorease.utils :as utils]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [hawk.core :as hawk])
   (:gen-class))
 
 (def categories
@@ -32,9 +33,26 @@
       (println (str "Błąd podczas przetwarzania pliku "
                     file-name ": " (.getMessage e))))))
 
+(defn handle-event [download-path ctx e]
+  (let [{:keys [kind file]} e
+        file-name (.getName file)
+        parent-dir (.getParent file)]
+    (println "Wykryte" kind "zdarzenie na" file-name)
+    (when (and (#{:create} kind)
+               (= parent-dir download-path)
+               (not= file-name ".DS_Store")
+               (not (.endsWith file-name ".download")))
+      (process-file download-path file-name))
+    ctx))
+
 (defn -main []
   (let [download-path (get-download-path)
         all-categories (conj categories default-category)]
     (utils/create-directories download-path all-categories)
     (doseq [file-name (utils/get-file-names download-path)]
-      (process-file download-path file-name))))
+      (process-file download-path file-name))
+    (hawk/watch! [{:paths   [download-path]
+                   :filter  hawk/file?
+                   :handler (partial handle-event download-path)}])
+    (println "Monitoruję:" download-path)
+    @(promise)))
