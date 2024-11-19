@@ -36,7 +36,7 @@
 (defn valid-file? [file]
   (let [file-name (.getName file)]
     (and (not (.isHidden file))
-         (not (str/ends-with? file-name ".download")))))
+         (not (str/ends-with? file-name ".rcdownload")))))
 
 (defn handle-event [download-path ctx {:keys [kind file]}]
   (let [file-name (.getName file)
