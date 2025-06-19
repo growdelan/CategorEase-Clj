@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [environ "1.2.0"]
                  [net.clojars.wkok/openai-clojure "0.21.1"]
-                 [hawk "0.2.11"]]
+                 [hawk "0.2.11"]
+                 [net.java.dev.jna/jna "5.12.1"]]
   :main ^:skip-aot categorease.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
